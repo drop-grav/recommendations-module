@@ -40,7 +40,7 @@ model.db.once('open', () => {
       // generates a places data
       const newPlace = {
         id: i,
-        url: `https://mock-property-images.s3-us-west-1.amazonaws.com/houses/house-${i}.jpeg`,
+        url: `https://drop-grav-recommendations.s3-us-west-1.amazonaws.com/${i}.jpg`,
         title: faker.lorem.sentence(),
         city: faker.address.city(),
         state: faker.address.state(),
