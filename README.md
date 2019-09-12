@@ -1,13 +1,12 @@
-# Recommedantions Service
+# Recommendations Service
 
-> Displays listings nearby
+> Displays nearby listings
 
 ## Related Projects
 
-  - https://github.com/haab-solutions/photo-gallery-module
-  - https://github.com/haab-solutions/reviews-module
-  - https://github.com/haab-solutions/recommendations-module
-  - https://github.com/haab-solutions/reservation-module
+  - https://github.com/drop-grav/reservation-module
+  - https://github.com/drop-grav/reviews-module
+  - https://github.com/drop-grav/gallery-service
 
 ## Table of Contents
 
@@ -37,3 +36,57 @@ From within the root directory:
 npm install
 ```
 
+## RESTful CRUD API
+
+### Create
+- POST /api/nearbyPlaces
+- Input: {
+    id: Number,
+    url: String,
+    title: String,
+    city: String,
+    state: String,
+    country: String,
+    plusVerified: Boolean,
+    propertyType: String,
+    price: Number,
+    averageReview: Number,
+    totalReviews: Number,
+    savedList: [String],
+    about: String,
+    theSpace: String,
+    neighborhood: String,
+  }
+
+### Read
+- GET /api/nearbyPlaces/:id
+- Param: id
+- Response: {
+    id: Number,
+    url: String,
+    title: String,
+    city: String,
+    state: String,
+    country: String,
+    plusVerified: Boolean,
+    propertyType: String,
+    price: Number,
+    averageReview: Number,
+    totalReviews: Number,
+    savedList: [String],
+    about: String,
+    theSpace: String,
+    neighborhood: String,
+  }
+
+### Update
+- PUT /api/nearbyPlaces
+- Input: {
+    filter, doc
+  }
+
+### Delete
+- DELETE /api/nearbyPlaces
+- Input: {
+    id: Number,
+  }

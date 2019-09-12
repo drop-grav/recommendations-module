@@ -63,5 +63,6 @@ typings/
 # bundled js
 aws-keys.json
 yarn.lock
-public/main.js
-public/main.js.br
+
+# images
+images
