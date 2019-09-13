@@ -11,6 +11,7 @@ mongoose.connect(`mongodb://${config.host}/airbnb`, {
 
 const placeSchema = new mongoose.Schema({
   id: Number,
+  listingId: Number,
   url: String,
   title: String,
   city: String,
