@@ -90,3 +90,29 @@ npm install
 - Input: {
     id: Number,
   }
+
+## Schema
+### SQL:
+
+### NoSQL:
+
+#### Place
+  - id: Number,
+  - listingId: Number,
+  - url: String,
+  - title: String,
+  - city: String,
+  - state: String,
+  - country: String,
+  - plusVerified: Boolean,
+  - propertyType: String,
+  - price: Number,
+  - averageReview: Number,
+  - totalReviews: Number,
+  - savedList: [String],
+  - about: String,
+  - theSpace: String,
+  - neighborhood: String,
+
+#### SavedList
+  - name: String,
