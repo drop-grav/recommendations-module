@@ -39,80 +39,72 @@ npm install
 ## RESTful CRUD API
 
 ### Create
-- POST /api/nearbyPlaces
-- Input: {
-    id: Number,
-    url: String,
-    title: String,
-    city: String,
-    state: String,
-    country: String,
-    plusVerified: Boolean,
-    propertyType: String,
-    price: Number,
-    averageReview: Number,
-    totalReviews: Number,
-    savedList: [String],
-    about: String,
-    theSpace: String,
-    neighborhood: String,
-  }
+- POST /api/listings
+- Input: JSON object that matches shape of listings schema
+- Status Code: 201
 
 ### Read
-- GET /api/nearbyPlaces/:id
+- GET /api/listings/:id/nearbyPlaces
 - Param: id
-- Response: {
-    id: Number,
-    url: String,
-    title: String,
-    city: String,
-    state: String,
-    country: String,
-    plusVerified: Boolean,
-    propertyType: String,
-    price: Number,
-    averageReview: Number,
-    totalReviews: Number,
-    savedList: [String],
-    about: String,
-    theSpace: String,
-    neighborhood: String,
-  }
+- Response: Array of JSON listings objects that share the same zone as the specified listing
 
 ### Update
-- PUT /api/nearbyPlaces
-- Input: {
-    filter, doc
-  }
+- PUT /api/listings/:id
+- Param: id
+- Inputs: id of listing to be replaced, new JSON listings object
 
 ### Delete
-- DELETE /api/nearbyPlaces
-- Input: {
-    id: Number,
-  }
+- DELETE /api/listings/:id
+- Param: id
+- Input: id of listing to be deleted
 
 ## Schema
-### SQL:
+
+### SQL
+
+#### listings
+  - id SERIAL PRIMARY KEY,
+  - saved_lists_id SMALLINT REFERENCES saved_lists(id),
+  - zones_id SMALLINT REFERENCES zones(id),
+  - url VARCHAR(100),
+  - title VARCHAR(75),
+  - city VARCHAR(25),
+  - state VARCHAR(15),
+  - country VARCHAR(15),
+  - plus_verified BOOL,
+  - property_type VARCHAR(40),
+  - price SMALLINT,
+  - average_review FLOAT,
+  - total_reviews SMALLINT,
+  - about TEXT,
+  - the_space TEXT,
+  - neighborhood TEXT,
+
+#### saved_lists
+  - id SERIAL PRIMARY KEY,
+  - name VARCHAR(25),
+
+#### zones
+  - id SERIAL PRIMARY KEY,
+  - number SMALLINT,
 
 ### NoSQL:
 
-#### Place
-  - id: Number,
-  - listingId: Number,
-  - url: String,
-  - title: String,
-  - city: String,
-  - state: String,
-  - country: String,
-  - plusVerified: Boolean,
-  - propertyType: String,
-  - price: Number,
-  - averageReview: Number,
-  - totalReviews: Number,
-  - savedList: [String],
-  - about: String,
-  - theSpace: String,
-  - neighborhood: String,
 
-#### SavedList
-  - name: String,
+#### listings
+  -  id int PRIMARY KEY, 
+  -  saved_list text,
+  -  zone int,
+  -  url text,
+  -  title text,
+  -  city text,
+  -  state text,
+  -  country text,
+  -  plus_verified Boolean,
+  -  property_type text,
+  -  price int,
+  -  average_review decimal,
+  -  total_reviews int,
+  -  about text,
+  -  the_space text,
+  -  neighborhood text

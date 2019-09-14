@@ -4,18 +4,17 @@ const faker = require('faker');
 const client = new cassandra.Client({ contactPoints: ['127.0.0.1'], localDataCenter: 'datacenter1' });
 const fs = require('fs');
 
-const listingCount = 10;
+const listingCount = 1000;
 const zoneCount = 10;
-// let arr = [];
-// let arr1 = [1, 'random'];
-// let arr2 = [2, 'random'];
-// arr.push(arr1.join(','));
-// arr.push(arr2.join(','));
 
+const fakeList = [];
+for (let i = 0; i < 10; i += 1) {
+  fakeList.push(faker.lorem.word());
+}
 
 const generateListings = () => {
   const listings = [];
-  for (let i = 1; i <= 10; i += 1) {
+  for (let i = 1; i <= listingCount; i += 1) {
     let plusVerified = true;
     if (Math.random() > 0.5) {
       plusVerified = false;
@@ -23,7 +22,7 @@ const generateListings = () => {
     
     let arr = [
       i,
-      'random',
+      fakeList[Math.floor(Math.random() * 10)],
       Math.ceil(Math.random() * zoneCount),
       `https://drop-grav-recommendations.s3-us-west-1.amazonaws.com/${Math.ceil(Math.random() * 900)}.jpg`,
       faker.lorem.sentence(),
@@ -45,7 +44,7 @@ const generateListings = () => {
 
     listings.push(arr.join(','));
   }
-  let csv = `id, saved_list, zone, url, title, city, state, country, plusVerified, propertyType, price, averageReview, totalReviews, about, theSpace, neighborhood
+  let csv = `id, saved_list, zone, url, title, city, state, country, plus_verified, property_type, price, average_review, total_reviews, about, the_space, neighborhood
   ${listings.join('\n')}`;
   fs.writeFile('./test.csv', csv, (err, res) => {
     if (err) {
@@ -56,7 +55,7 @@ const generateListings = () => {
   });
 };
 
-generateListings();
+// generateListings();
 
 
 client.connect((err) => {
@@ -69,25 +68,27 @@ client.connect((err) => {
   };`;
   
   const query2 = `CREATE TABLE airbnb.listings ( 
-    id int PRIMARY KEY, 
-    saved_list text,
+    cassId int, 
+    id_saved_lists int,
+    saved_list_name text,
     zone int,
     url text,
     title text,
     city text,
     state text,
     country text,
-    plusVerified Boolean,
-    propertyType text,
+    plus_verified Boolean,
+    property_type text,
     price int,
-    averageReview decimal,
-    totalReviews int,
+    average_review decimal,
+    total_reviews int,
     about text,
-    theSpace text,
-    neighborhood text
+    the_space text,
+    neighborhood text,
+    PRIMARY KEY (cassId, zone)
     )`;
   
-  const query3 = `COPY airbnb.listings (id, saved_list, zone, url, title, city, state, country, plusVerified, propertyType, price, averageReview, totalReviews, about, theSpace, neighborhood) FROM '../../../../howard/Documents/sdc/recommendations-module/test.csv' WITH HEADER = TRUE;`;
+  const query3 = `COPY airbnb.listings (cassId, id_saved_lists, saved_list_name, zone, url, title, city, state, country, plus_verified, property_type, price, average_review, total_reviews, about, the_space, neighborhood) FROM '/Users/howard/Documents/sdc/recommendations-module/output.csv' WITH HEADER = TRUE;`;
   
 
   // const query3 = 'INSERT INTO test.test ( id, name ) VALUES (uuid(), \'Howard\');';
