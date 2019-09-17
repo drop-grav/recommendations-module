@@ -7,6 +7,7 @@ import * as sc from '../styles/placeStyles';
 import { useCurrentPlaceContext } from '../context/CurrentPlaceContext';
 
 const Place = (props) => {
+  console.log(props);
   const {
     place, first, last,
   } = props;
@@ -16,21 +17,22 @@ const Place = (props) => {
   let percent = '100%';
   let color;
   if (place) {
-    percent = (`${(place.averageReview / 5) * 100}%`);
-    color = place.plusVerified ? 'rgb(145, 70, 105)' : undefined;
+    percent = (`${(place.average_review / 5) * 100}%`);
+    color = place.plus_verified ? 'rgb(145, 70, 105)' : undefined;
   }
 
   const propertyRender = [];
-  if (place.plusVerified) {
+  if (place.plus_verified) {
     propertyRender.push(
-      <sc.PlusVerified color={color} key={place.plusVerified}>PLUS</sc.PlusVerified>,
+      <sc.PlusVerified color={color} key={place.plus_verified}>PLUS</sc.PlusVerified>,
     );
-    propertyRender.push(<span key={place._id}>Verified</span>);
+    propertyRender.push(<span key={place.cassid}>Verified</span>);
   } else {
-    propertyRender.push(<span key={place._id}>{place.propertyType}</span>);
+    propertyRender.push(<span key={place.cassid}>{place.property_type}</span>);
   }
 
-  const favorited = !!place.savedList.length;
+  // const favorited = !!place.savedList.length;
+  const favorited = false;
   const heartStyle = {
     fill: favorited ? 'rgb(255, 90, 95)' : 'rgb(72, 72, 72)',
     fillOpacity: favorited ? '1' : '0.5',
@@ -53,7 +55,7 @@ const Place = (props) => {
       <sc.Price>{`$${place.price}/night`}</sc.Price>
       <sc.Review>
         <RatingStars size="1.1em" color={color} percent={percent} />
-        <span>{` ${place.totalReviews}`}</span>
+        <span>{` ${place.total_reviews}`}</span>
       </sc.Review>
     </sc.PlaceDiv>
   );
@@ -69,16 +71,16 @@ Place.propTypes = {
   first: PropTypes.bool,
   last: PropTypes.bool,
   place: PropTypes.shape({
-    _id: PropTypes.string.isRequired,
+    // _id: PropTypes.string.isRequired,
     url: PropTypes.string.isRequired,
-    plusVerified: PropTypes.bool.isRequired,
-    propertyType: PropTypes.string.isRequired,
+    plus_verified: PropTypes.bool.isRequired,
+    property_type: PropTypes.string.isRequired,
     title: PropTypes.string.isRequired,
     city: PropTypes.string.isRequired,
     price: PropTypes.number.isRequired,
-    totalReviews: PropTypes.number.isRequired,
-    averageReview: PropTypes.number.isRequired,
-    savedList: PropTypes.arrayOf(PropTypes.string.isRequired).isRequired,
+    total_reviews: PropTypes.number.isRequired,
+    average_review: PropTypes.string.isRequired,
+    saved_list: PropTypes.arrayOf(PropTypes.string.isRequired).isRequired,
   }),
 };
 

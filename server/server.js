@@ -12,12 +12,14 @@ app.use(express.json());
 app.use(cors());
 app.use('/listing/:id', express.static('public'));
 
-app.get('/api/nearbyPlaces/:id', (req, res) => {
-  // ranges from 8 - 13
-  const randomAmount = Math.floor(Math.random() * 6 + 8);
-  model.Place.aggregate([{ $sample: { size: randomAmount } }]).then((result) => {
-    res.send(result);
-  });
+app.get('/api/listings/:id/nearbyListings', (req, res) => {
+  model.getZone(req.params.id)
+    .then((result) => {
+      model.getNearbyListings(result.rows[0].zone)
+        .then((listings) => {
+          res.send(listings.rows);
+        });
+    });
 });
 
 app.post('/api/nearbyPlaces', (req, res) => {

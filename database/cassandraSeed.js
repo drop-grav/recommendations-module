@@ -62,12 +62,12 @@ client.connect((err) => {
   if (err) {
     return console.error(err);
   }
-  const query = `CREATE KEYSPACE airbnb WITH REPLICATION = {
+  const query = `CREATE KEYSPACE airbnb_by_id WITH REPLICATION = {
     'class' : 'SimpleStrategy',
     'replication_factor' : 1
   };`;
   
-  const query2 = `CREATE TABLE airbnb.listings ( 
+  const query2 = `CREATE TABLE airbnb_by_id.listings ( 
     cassId int, 
     id_saved_lists int,
     saved_list_name text,
@@ -85,24 +85,30 @@ client.connect((err) => {
     about text,
     the_space text,
     neighborhood text,
-    PRIMARY KEY (cassId, zone)
+    PRIMARY KEY (zone, cassId)
     )`;
+
+  const query4 = `CREATE TABLE airbnb_by_id.listings (
+    cassId int,
+    zone int,
+    PRIMARY KEY (cassId)
+  )`;
   
-  const query3 = `COPY airbnb.listings (cassId, id_saved_lists, saved_list_name, zone, url, title, city, state, country, plus_verified, property_type, price, average_review, total_reviews, about, the_space, neighborhood) FROM '/Users/howard/Documents/sdc/recommendations-module/output.csv' WITH HEADER = TRUE;`;
+  const query3 = `COPY airbnb_by_id.listings (cassId, id_saved_lists, saved_list_name, zone, url, title, city, state, country, plus_verified, property_type, price, average_review, total_reviews, about, the_space, neighborhood) FROM '/Users/howard/Documents/sdc/recommendations-module/output.csv' WITH HEADER = TRUE;`;
   
 
   // const query3 = 'INSERT INTO test.test ( id, name ) VALUES (uuid(), \'Howard\');';
   // const query4 = 'INSERT INTO test.test ( id, name ) VALUES (uuid(), \'Bob\');';
 
 
-  client.execute('DROP KEYSPACE IF EXISTS airbnb')
+  client.execute('DROP KEYSPACE IF EXISTS airbnb_by_id')
     .then(() => {
       client.execute(query)
         .then(() => {
-          client.execute('USE airbnb');
+          client.execute('USE airbnb_by_id');
         })
         .then(() => {
-          client.execute(query2);
+          client.execute(query4);
         });
     //       .then(() => {
     //         client.execute(query4);

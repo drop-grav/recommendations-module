@@ -122,28 +122,7 @@ client.connect()
       .then(() => {
         client.query(`CREATE TABLE listings (${listingsSchema.join(',')})`);
       });
-      // .then(() => {
-      //   client.query(`INSERT INTO listings (
-      //     id_saved_lists, 
-      //     id_zones,  
-      //     url,
-      //     title,
-      //     city,
-      //     state,
-      //     country,
-      //     plus_verified,
-      //     property_type,
-      //     price,
-      //     average_review,
-      //     total_reviews,
-      //     about,
-      //     the_space,
-      //     neighborhood ) 
-      //   VALUES ${generateListings()}`)
-      //     .then(() => {
-      //       client.end();
-      //     });
-    })
+  })
   .catch((err) => {
     console.error('connection error', err.stack);
   });
