@@ -7,7 +7,7 @@ import { useCurrentPlaceContext } from '../context/CurrentPlaceContext';
 
 const MiniPlace = (props) => {
   const { place, expanded, toggleExpanded } = props;
-  const percent = `${(place.averageReview / 5) * 100}%`;
+  const percent = `${(place.average_review / 5) * 100}%`;
   const [currentPlace] = useCurrentPlaceContext();
   const buttonRef = useRef(null);
   const miniPlaceRef = useRef(null);
@@ -38,7 +38,7 @@ const MiniPlace = (props) => {
             </sc.MiniLocation>
             <sc.MiniReviews>
               <RatingStars size="1.2em" percent={percent} />
-              {` ${place.totalReviews} reviews`}
+              {` ${place.total_reviews} reviews`}
             </sc.MiniReviews>
           </sc.DescriptionDiv>
         </sc.ImageDescriptionWrapper>
@@ -54,7 +54,7 @@ const MiniPlace = (props) => {
           The space
         </sc.AboutHeader>
         <sc.AboutText>
-          {place.theSpace}
+          {place.the_space}
         </sc.AboutText>
         <sc.AboutHeader>
           Neighborhood
@@ -75,7 +75,7 @@ MiniPlace.propTypes = {
     state: PropTypes.string,
     country: PropTypes.string,
     about: PropTypes.string,
-    theSpace: PropTypes.string,
+    the_space: PropTypes.string,
     neighborhood: PropTypes.string,
     averageReview: PropTypes.number,
     totalReviews: PropTypes.number,

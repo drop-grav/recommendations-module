@@ -67,7 +67,7 @@ client.connect((err) => {
     'replication_factor' : 1
   };`;
   
-  const query2 = `CREATE TABLE airbnb_by_id.listings ( 
+  const query2 = `CREATE TABLE listings_by_zone ( 
     cassId int, 
     id_saved_lists int,
     saved_list_name text,
@@ -94,11 +94,11 @@ client.connect((err) => {
     PRIMARY KEY (cassId)
   )`;
   
-  const query3 = `COPY airbnb_by_id.listings (cassId, id_saved_lists, saved_list_name, zone, url, title, city, state, country, plus_verified, property_type, price, average_review, total_reviews, about, the_space, neighborhood) FROM '/Users/howard/Documents/sdc/recommendations-module/output.csv' WITH HEADER = TRUE;`;
+  const query3 = `COPY listings_by_zone (cassId, id_saved_lists, saved_list_name, zone, url, title, city, state, country, plus_verified, property_type, price, average_review, total_reviews, about, the_space, neighborhood) FROM '/Users/howard/Documents/sdc/recommendations-module/output.csv' WITH HEADER = TRUE;`;
   
-
-  // const query3 = 'INSERT INTO test.test ( id, name ) VALUES (uuid(), \'Howard\');';
-  // const query4 = 'INSERT INTO test.test ( id, name ) VALUES (uuid(), \'Bob\');';
+  const listings_by_saved_lists = 'CREATE TABLE listings_by_saved_lists (cassid int, saved_list_name text, PRIMARY KEY (cassid, saved_list_name));';
+  const saved_lists_by_listings = 'CREATE TABLE saved_lists_by_listings (saved_list_name text, cassid int, PRIMARY KEY (saved_list_name, cassid));';
+  const saved_lists = 'CREATE TABLE saved_lists (saved_list_name text PRIMARY KEY)';
 
 
   client.execute('DROP KEYSPACE IF EXISTS airbnb_by_id')

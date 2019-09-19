@@ -10,13 +10,36 @@ client.connect((err) => {
 });
 
 module.exports.getZone = (id) => {
-  return client.execute(`SELECT zone FROM airbnb_by_id.listings WHERE cassId = ${id}`);
+  return client.execute(`SELECT zone FROM airbnb.listings_by_id WHERE cassId = ${id}`);
 };
 
 module.exports.getNearbyListings = (zone) => {
-  return client.execute(`SELECT * FROM airbnb_by_zone.listings WHERE zone = ${zone} LIMIT 10`);
+  return client.execute(`SELECT * FROM airbnb.listings_by_zone WHERE zone = ${zone} LIMIT 20`);
 };
 
+module.exports.getSavedLists = () => {
+  return client.execute(`SELECT * FROM airbnb.saved_lists`);
+};
+
+module.exports.addSavedList = (name) => {
+  return client.execute(`INSERT INTO airbnb.saved_lists (saved_list_name) VALUES ('${name}')`);
+}
+
+module.exports.addToSavedList1 = (name, cassId) => {
+  return client.execute(`INSERT INTO airbnb.saved_lists_by_listings (saved_list_name, cassId) VALUES ('${name}', ${cassId})`);
+}
+
+module.exports.addToSavedList2 = (cassId, name) => {
+  return client.execute(`INSERT INTO airbnb.listings_by_saved_lists (cassId, saved_list_name) VALUES (${cassId}, '${name}')`);
+}
+
+module.exports.getListingsInSavedList = (name) => {
+  return client.execute(`SELECT * FROM airbnb.saved_lists_by_listings WHERE saved_list_name = '${name}'`);
+}
+
+module.exports.getSavedListsInListing = (cassId) => {
+  return client.execute(`SELECT * FROM airbnb.listings_by_saved_lists WHERE cassId = ${cassId}`);
+}
 // 
 
 // const mongoose = require('mongoose');

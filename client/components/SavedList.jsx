@@ -27,7 +27,12 @@ const SavedList = () => {
   useEffect(() => {
     axios('/api/savedList')
       .then((response) => {
-        setSavedList(response.data);
+        const savedLists = [];
+        for (let i = 0; i < response.length; i++) {
+          savedLists.push(response[i].saved_list);
+        }
+
+        setSavedList(savedLists);
       });
   }, []);
 

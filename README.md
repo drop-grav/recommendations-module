@@ -43,10 +43,29 @@ npm install
 - Input: JSON object that matches shape of listings schema
 - Status Code: 201
 
+- POST /api/saved-lists
+- Input: JSON object with key-value pair of "saved_list_name": "?"
+- Status Code: 201
+
+- POST /api/saved-lists/:name
+- Input: JSON object with key-value pair of "cassId: ?"
+- Status Code: 201
+
 ### Read
-- GET /api/listings/:id/nearbyPlaces
+- GET /api/listings/:id/nearby-listings
 - Param: id
 - Response: Array of JSON listings objects that share the same zone as the specified listing
+
+- GET /api/saved-lists
+- Response: Array of JSON saved_list objects
+
+- GET /api/saved-lists/:name
+- Param: name
+- Response Array of JSON listings objects that are in the shared list
+
+- GET /api/listings/:id/saved-lists
+- Param: id
+- Response: Array of JSON saved lists objects that the listing belong to
 
 ### Update
 - PUT /api/listings/:id

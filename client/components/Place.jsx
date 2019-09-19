@@ -31,7 +31,7 @@ const Place = (props) => {
     propertyRender.push(<span key={place.cassid}>{place.property_type}</span>);
   }
 
-  // const favorited = !!place.savedList.length;
+  // const favorited = !!place.saved_list_name.length;
   const favorited = false;
   const heartStyle = {
     fill: favorited ? 'rgb(255, 90, 95)' : 'rgb(72, 72, 72)',
