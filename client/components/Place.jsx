@@ -7,7 +7,6 @@ import * as sc from '../styles/placeStyles';
 import { useCurrentPlaceContext } from '../context/CurrentPlaceContext';
 
 const Place = (props) => {
-  console.log(props);
   const {
     place, first, last,
   } = props;
