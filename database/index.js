@@ -9,13 +9,24 @@ client.connect((err) => {
   console.log('connected');
 });
 
+const getZoneQuery = 'SELECT zone FROM airbnb.listings_by_id WHERE cassId = ?';
+const getNearbyListingsQuery = 'SELECT * FROM airbnb.listings_by_zone WHERE zone = ? LIMIT 20';
+
 module.exports.getZone = (id) => {
-  return client.execute(`SELECT zone FROM airbnb.listings_by_id WHERE cassId = ${id}`);
+  return client.execute(getZoneQuery, [id], { prepare: true });
 };
 
 module.exports.getNearbyListings = (zone) => {
-  return client.execute(`SELECT * FROM airbnb.listings_by_zone WHERE zone = ${zone} LIMIT 20`);
+  return client.execute(getNearbyListingsQuery, [zone], { prepare: true });
 };
+
+module.exports.addListing = () => {
+  return client.execute('INSERT INTO airbnb.listings_by_zone (cassid, zone) VALUES (10000001, 10001);');
+}
+
+module.exports.deleteListing = () => {
+  return client.execute('DELETE FROM airbnb.listings_by_zone WHERE zone = 10001;');
+}
 
 module.exports.getSavedLists = () => {
   return client.execute(`SELECT * FROM airbnb.saved_lists`);

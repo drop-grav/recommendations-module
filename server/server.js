@@ -1,3 +1,4 @@
+require('newrelic');
 const express = require('express');
 const cors = require('cors');
 const model = require('../database/index');
@@ -22,6 +23,20 @@ app.get('/api/listings/:id/nearby-listings', (req, res) => {
     })
     .catch(() => {
       res.sendStatus(404);
+    });
+});
+
+app.post('/api/listings', (req, res) => {
+  model.addListing()
+    .then(() => {
+      res.sendStatus(201);
+    });
+});
+
+app.delete('/api/listings', (req, res) => {
+  model.deleteListing()
+    .then(() => {
+      res.send('Successfully deleted');
     });
 });
 
