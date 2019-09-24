@@ -1,12 +1,12 @@
 const cassandra = require('cassandra-driver');
-const client = new cassandra.Client({ contactPoints: ['127.0.0.1'], localDataCenter: 'datacenter1' });
+const client = new cassandra.Client({ contactPoints: ['18.223.107.41', '18.222.23.179', '18.188.178.228'], localDataCenter: 'us-east-2' });
 
 client.connect((err) => {
   if (err) {
-    console.error(err);
+    return console.error(err);
   }
 
-  console.log('connected');
+  console.log('connected to Cassandra');
 });
 
 const getZoneQuery = 'SELECT zone FROM airbnb.listings_by_id WHERE cassId = ?';

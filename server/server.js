@@ -26,6 +26,13 @@ app.get('/api/listings/:id/nearby-listings', (req, res) => {
     });
 });
 
+app.get('/api/test', (req, res) => {
+  model.getZone(47803)
+    .then((result) => {
+      res.send(result);
+    });
+});
+
 app.post('/api/listings', (req, res) => {
   model.addListing()
     .then(() => {
