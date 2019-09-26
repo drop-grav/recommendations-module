@@ -25,7 +25,7 @@ const SavedList = () => {
   }, [Object.keys(currentPlace).length]);
 
   useEffect(() => {
-    axios('http://localhost:3004/api/saved-lists')
+    axios('http://3.19.69.41/api/saved-lists')
       .then((response) => {
         const savedLists = [];
         for (let i = 0; i < response.length; i++) {

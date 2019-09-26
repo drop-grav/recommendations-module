@@ -21,8 +21,8 @@ app.get('/api/listings/:id/nearby-listings', (req, res) => {
           res.send(listings.rows);
         });
     })
-    .catch(() => {
-      res.sendStatus(404);
+    .catch((err) => {
+      res.status(404).send(err);
     });
 });
 

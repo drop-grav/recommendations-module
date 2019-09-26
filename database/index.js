@@ -1,6 +1,6 @@
 const cassandra = require('cassandra-driver');
-const client = new cassandra.Client({ contactPoints: ['18.223.107.41', '18.222.23.179', '18.188.178.228'], localDataCenter: 'us-east-2' });
-
+const client = new cassandra.Client({ contactPoints: ['18.222.34.232', '18.222.115.202', '18.189.195.140'], localDataCenter: 'us-east-2' });
+// const client = new cassandra.Client({ contactPoints: ['127.0.0.1'], localDataCenter: 'datacenter1' });
 client.connect((err) => {
   if (err) {
     return console.error(err);

@@ -21,7 +21,7 @@ const PlaceList = () => {
     const splitUrl = document.URL.split('/');
     const i = splitUrl.indexOf('listing');
     const id = splitUrl[i + 1];
-    const url = `http://localhost:3004/api/listings/${id}/nearby-listings`;
+    const url = `http://3.19.69.41/api/listings/${id}/nearby-listings`;
     axios(url)
       .then((response) => response.data)
       .then((fetchedPlaces) => {
