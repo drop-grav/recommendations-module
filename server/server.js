@@ -5,7 +5,22 @@ const model = require('../database/index');
 
 const port = 3004;
 const app = express();
+const redis = require('redis');
+const redisOptions = {
+  port: 6379,
+  host: '18.191.222.60'
+}
 
+const client = redis.createClient(redisOptions);
+
+client.on('connect', () => {
+  console.log('connected to Redis');
+});
+
+client.on("error", function (err) {
+  console.log("Error " + err);
+});
+  
 app.use(require('morgan')('dev'));
 
 app.use(express.json());
@@ -14,16 +29,23 @@ app.use(cors());
 app.use('/listing/:id', express.static('public'));
 
 app.get('/api/listings/:id/nearby-listings', (req, res) => {
-  model.getZone(req.params.id)
-    .then((result) => {
-      model.getNearbyListings(result.rows[0].zone)
-        .then((listings) => {
-          res.send(listings.rows);
+  client.get(req.params.id, (error, cachedRes) => {
+    if (cachedRes === null) {
+      model.getZone(req.params.id)
+        .then((result) => {
+          model.getNearbyListings(result.rows[0].zone)
+            .then((listings) => {
+              client.set(req.params.id, JSON.stringify(listings.rows));
+              res.send(listings.rows);
+            });
+        })
+        .catch((err) => {
+          res.status(404).send(err);
         });
-    })
-    .catch((err) => {
-      res.status(404).send(err);
-    });
+    } else {
+      res.send(JSON.parse(cachedRes));
+    }
+  });
 });
 
 app.get('/api/test', (req, res) => {
